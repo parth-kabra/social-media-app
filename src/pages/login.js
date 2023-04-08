@@ -18,6 +18,8 @@ export default function Login(){
 
             <br/>
             <a className="login__btn" onClick={loginUser}>Login/SignUp with Google</a>
+            <br/>
+            <a className="cmp__text" href="https://cerulean-ostrich-10d.notion.site/Terms-and-conditions-0c5113a1c87849428a11f63f8a9230a1">By creating an account you agree to Our Terms and Conditions</a>
         </div>
     )
 }

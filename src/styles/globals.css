@@ -101,9 +101,7 @@ img{
 }
 
 .text{
-    background: radial-gradient(465px at -15.1% -25%, rgb(17, 130, 193) 0%, rgb(67, 166, 238) 49%, rgb(126, 203, 244) 90.2%);    color: white;
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
+    color: var(--life);
 }
 
 .big{
@@ -129,13 +127,18 @@ textarea{
     visibility: hidden;
 }
 
+:root{
+    --life:#1a1c1e;
+}
+
 #fileinput::before{
     content: 'Select a video/image';
-    background: radial-gradient(465px at -15.1% -25%, rgb(17, 130, 193) 0%, rgb(67, 166, 238) 49%, rgb(126, 203, 244) 90.2%);    color: white;
+    background-color: var(--life);
     border: none;
     display: inline-block;
     font-family: var(--body-font);
     padding: .9em;
+    color: white;
     font-family: var(--body-font);
     border-radius: 5px ;
 }
@@ -155,7 +158,7 @@ textarea{
     bottom: 1rem;
 }
 
-@media screen and (max-width:657px) {
+@media screen and (max-width:900px) {
     :root{
         --posts-width:100%
     }
@@ -200,7 +203,7 @@ textarea{
 }
 
 .post{
-    background: radial-gradient(465px at -15.1% -25%, rgb(17, 130, 193) 0%, rgb(67, 166, 238) 49%, rgb(126, 203, 244) 90.2%);
+    background-color: var(--life);
     color: white;
     border: none;
     margin-top: .2em;
@@ -243,11 +246,21 @@ textarea{
 }
 
 .userposticons{
+    display: flex;
+    align-items: center;
     font-size: var(--h1-font-size);
 }
 
-.bx-heart{
+.likes{
     color: rgb(255, 58, 58);
+    font-family: "Poppins";
+    display: flex;
+    align-items: center;
+}
+
+.likes p{
+    margin-top: 1vh;
+    font-size: 20px;
 }
 
 .bx-message-alt{
@@ -264,7 +277,7 @@ textarea{
 .verybig{
     font-size: var(--big-font-size);
     font-family: 'Lexend', sans-serif;
-    color: rgb(0, 141, 223);
+    color: var(--life);
 }
 
 .login{
@@ -285,7 +298,8 @@ textarea{
 }
 
 .login__btn{
-    background: radial-gradient(465px at -15.1% -25%, rgb(17, 130, 193) 0%, rgb(67, 166, 238) 49%, rgb(126, 203, 244) 90.2%);    color: white;
+    background-color: var(--life);
+    color: white;
     cursor: pointer;
     border: none;
     display: inline-block;
@@ -313,7 +327,7 @@ textarea{
 
 .loading svg circle {
  fill: none;
- stroke: hsl(214, 97%, 59%);
+ stroke: var(--life);
  stroke-width: 2;
  stroke-dasharray: 1, 200;
  stroke-dashoffset: 0;

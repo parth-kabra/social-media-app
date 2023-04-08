@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import StaticHead from "./statichead";
 import God from "../img/test.jpg"
 import Image from "next/image";
-import { getDatabase, ref, set, get, child, remove} from "firebase/database"
+import { getDatabase, ref, set, get, update, increment} from "firebase/database"
 import {app, auth} from "@/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import Header from "./header";
 import Loading from "./loading";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Index(){
 	const db = getDatabase();
@@ -18,6 +20,30 @@ export default function Index(){
 	const [user, setUser] = useState("")
 	const [userpfp, setPFP] = useState("");
 
+	function getTimeStamp(){
+		const now = new Date();
+		const year = now.getFullYear(); // Get the current year (4 digits)
+		const month = now.getMonth() + 1; // Get the current month (0-11), add 1 to convert to (1-12)
+		const day = now.getDate(); // Get the current day (1-31)
+		const hours = now.getHours(); // Get the current hour (0-23)
+		const minutes = now.getMinutes(); // Get the current minute (0-59)
+		const seconds = now.getSeconds(); // Get the current second (0-59)
+		
+		// Pad single digits with a leading zero
+		const formattedMonth = month < 10 ? `0${month}` : month;
+		const formattedDay = day < 10 ? `0${day}` : day;
+		const formattedHours = hours < 10 ? `0${hours}` : hours;
+		const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+		const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+		
+		// Combine the date and time into a string
+		const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
+		const formattedTime = `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+		const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+		return formattedDateTime
+	}
+
 	function addNewPost(){
 		if(!document.getElementById("postbanner") || document.getElementById("posttext").value === ''){
 			return;
@@ -26,28 +52,34 @@ export default function Index(){
 		window.crypto.getRandomValues(randomBytes);
 		const hashArray = Array.from(randomBytes).map(b => b.toString(16).padStart(2, '0'));
 		const randomHash = hashArray.join('');
-
+		toast.info("Trying to post...")
 		let post = {
 			description: document.getElementById("posttext").value,
 			banner: file,
 			likes: 0,
 			creator: user,
 			pfp: userpfp,
-			key: randomHash
+			key: randomHash,
+			timeStamp: getTimeStamp()
 		}
 		document.getElementById("preview").style.display = "none"
 		document.getElementById("postbtn").style.display = "none"
 		document.getElementById("posttext").value = ""
 		const newPost = ref(db, `posts/${randomHash}`)
 		set(newPost, post).then(()=>{
-			alert("post added")
+			toast.success("Posted successfully")
 		}).catch(()=>{
-			alert("failed")
+			toast.error("Post failed")
 		})
 	}
 
-	useEffect(()=>{
+	function likePost(id){
+		const updates = {}
+		updates[`/${id}/likes`] = increment(1)
+		update(postsRef, updates)
+	}
 
+	useEffect(()=>{
 		auth.onAuthStateChanged((current_user)=>{
 			if(current_user){
 				setLogged(true)
@@ -60,7 +92,6 @@ export default function Index(){
 			if(snapshots.exists()){
 				const data = snapshots.val();
 				let dataArray = Object.values(data)
-				dataArray.reverse()
 				setLoading(true);
 				setPostsData(dataArray)
 			}
@@ -75,6 +106,7 @@ export default function Index(){
 		if(!fileInput){
 			return
 		}
+
 
         fileInput.addEventListener('change', () => {
 			const file = fileInput.files[0];
@@ -109,7 +141,7 @@ export default function Index(){
 		return(
 			<>
 			<Loading />
-			<a href="https://github.com/parth-kabra/social-media-app"><i class='bx bxl-github'></i></a>
+			<a href="https://github.com/parth-kabra/social-media-app"><i className='bx bxl-github'></i></a>
 			</>
 		)
 	}
@@ -158,8 +190,10 @@ export default function Index(){
 							</span>
 							<span className="userposticons">
 								<br />
-								<i className='bx bx-heart'></i>
-								<i className='bx bx-message-alt'></i>
+								<span className="likes">
+									<i className='bx bx-heart' onClick={() => likePost(post.key)} id="addlike"></i>
+									<p>{post.likes}</p>
+								</span>
 							</span>
 						</div>
 					))
@@ -168,7 +202,7 @@ export default function Index(){
 				<br />
 
             </section>
-			<a href="https://github.com/parth-kabra/social-media-app"><i class='bx bxl-github'></i></a>
+			<a href="https://github.com/parth-kabra/social-media-app"><i className='bx bxl-github'></i></a>
 			<Header />
         </div>
     )
