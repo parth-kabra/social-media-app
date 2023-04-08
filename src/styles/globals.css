@@ -148,6 +148,13 @@ textarea{
     --posts-width:40rem;
 }
 
+.bxl-github{
+    font-size: var(--big-font-size);
+    position: fixed;
+    right:1rem;
+    bottom: 1rem;
+}
+
 @media screen and (max-width:657px) {
     :root{
         --posts-width:100%

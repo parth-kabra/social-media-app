@@ -107,7 +107,10 @@ export default function Index(){
     })
 	if(!loading){
 		return(
+			<>
 			<Loading />
+			<a href="https://github.com/parth-kabra/social-media-app"><i class='bx bxl-github'></i></a>
+			</>
 		)
 	}
     return (
@@ -165,6 +168,7 @@ export default function Index(){
 				<br />
 
             </section>
+			<a href="https://github.com/parth-kabra/social-media-app"><i class='bx bxl-github'></i></a>
 			<Header />
         </div>
     )
