@@ -148,7 +148,7 @@ textarea{
 }
 
 :root{
-    --posts-width:40rem;
+    --posts-width:100% !important;
 }
 
 .bxl-github{
@@ -158,9 +158,9 @@ textarea{
     bottom: 1rem;
 }
 
-@media screen and (max-width:900px) {
+@media screen and (min-width:900px) {
     :root{
-        --posts-width:100%
+        --posts-width:40rem !important;
     }
 }
 
