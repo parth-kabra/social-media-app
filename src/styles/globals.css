@@ -225,6 +225,11 @@ textarea{
     width: var(--posts-width);
 }
 
+.bxs-crown{
+    font-size: large;
+    color: rgb(254, 195, 0);
+}
+
 .creator img{
     border-radius: 10px;
     width: 40px;
