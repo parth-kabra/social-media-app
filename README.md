@@ -3,7 +3,7 @@
 </h1>
 <br>
 <h3>Share your thoughts around the globe with the help of Friendverse!</h3>
-<a href="https://friendverse.vercel.app/"><img width="80%" alt="main page" src="friendverse.PNG"></a>
+<a href="https://friendverse.vercel.app/"><img width="80%" alt="main page" src="preview.png"></a>
 
 <hr>
 
