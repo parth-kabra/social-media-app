@@ -19,3 +19,11 @@ model Post {
   pfp String
   key String
 }
+
+model Comment {
+  id Int @id @default(autoincrement())
+  text String
+  key String
+  creator String
+  pfp String
+}

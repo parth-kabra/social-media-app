@@ -8,3 +8,12 @@ CREATE TABLE "Post" (
     "pfp" TEXT NOT NULL,
     "key" TEXT NOT NULL
 );
+
+-- CreateTable
+CREATE TABLE "Comment" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "text" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "creator" TEXT NOT NULL,
+    "pfp" TEXT NOT NULL
+);
