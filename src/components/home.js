@@ -7,12 +7,16 @@ import Header from "./header";
 import Loading from "./loading";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Collapse from 'react-collapse';
 
 export default function Index(){
 	const [file, setFile] = useState("");
+	
 	const [postsData, setPostsData] = useState([])
-	const [logged, setLogged] = useState(false);
+	const [comments, setPostComments] = useState([])
 
+	const [logged, setLogged] = useState(false);
+	const [isOpen, setIsOpen] = useState({});
 	const [loading, setLoading] = useState(false);
 	const [user, setUser] = useState("")
 	const [userpfp, setPFP] = useState("");
@@ -28,6 +32,13 @@ export default function Index(){
 		})
 	}
 
+	function handleCommentCollapse(id){
+		setIsOpen((prevState) => ({
+			...prevState,
+			[id]:!prevState[id]
+		}))
+	}
+
 	function addNewPost(){
 		if(!document.getElementById("postbanner") || document.getElementById("posttext").value === ''){
 			return;
@@ -36,7 +47,7 @@ export default function Index(){
 		window.crypto.getRandomValues(randomBytes);
 		const hashArray = Array.from(randomBytes).map(b => b.toString(16).padStart(2, '0'));
 		const randomHash = hashArray.join('');
-		toast.info("Trying to post...")
+		toast.info("Trying to post ⌛")
 		let post = {
 			description: document.getElementById("posttext").value,
 			banner: file,
@@ -45,28 +56,56 @@ export default function Index(){
 			pfp: userpfp,
 			key: randomHash,
 		}
-		handleNewPostPrisma(post);
+		handleNewPostPrisma(post)
+		toast.success("Posted successfully 🎉🎉")
 		document.getElementById("preview").style.display = "none"
 		document.getElementById("postbtn").style.display = "none"
 		document.getElementById("posttext").value = ""
 		
 	}
 
-	async function handleLikePostPrisma(postId, postLikes){
-		/*const res = await fetch('/api/posts', {
-			method: 'PUT',
-			body: JSON.stringify({
-				postKey: postId,
-				newLikes: postLikes + 1
-			}),
+	async function handleLikePostPrisma(post_data){
+		const res = await fetch('/api/post_data', {
+			method: 'POST',
+			body: JSON.stringify(post_data),
 			headers: {
 				'Content-Type': 'application/json',
 			}
-		})*/
+		})
+	}
+
+	async function handlePostComment(comment_data){
+		const res = await fetch("/api/comments", {
+			method: "POST",
+			body: JSON.stringify(comment_data),
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+	}
+
+	function PostComment(postkey){
+		// get the values
+		let text = document.getElementById("post__comment").value
+		while(text.length && text[text.length - 1] == ' '){
+			delete text[text.length - 1]
+		}
+		if(!text.length){
+			toast.warning("Comment can not be empty.")
+			return
+		}
+		const comment = {
+			pfp: userpfp,
+			key: postkey,
+			creator: user,
+			text: text
+		}
+		handlePostComment(comment)
+
 	}
 
 	function likePost(post_data){
-		//handleLikePostPrisma(post_data.key, post_data.likes)
+		handleLikePostPrisma(post_data)
 	}
 
 
@@ -98,7 +137,14 @@ export default function Index(){
 			posts.reverse()
 			setPostsData(posts)
 		}
+		async function getPostComments(){
+			const response = await fetch("/api/comments")
+			const comments = await response.json()
+			setPostComments(comments)
+		}
+
 		getPostsData()
+		getPostComments()
 
 		const fileInput = document.getElementById('fileinput');
         const preview = document.getElementById('preview');
@@ -172,29 +218,70 @@ export default function Index(){
 
 				<div className="posts" id="posts">
 					{postsData.map((post) => (
-						
-						<div className="userpost" key={post.key}>
-							<span className="creator">
-								<img src={post.pfp} />
-								<p className="normal">{post.creator}</p>
-								{post.creator == "parth kabra" ? <i className='bx bxs-crown'></i> : <></>}
-							</span>
-							<br />
-							<span className="description">
-								<p>{post.description}</p>
-							</span>
-							
-							<span id="view">
-								<img src={post.banner} />
-							</span>
-							<span className="userposticons">
+						<span>
+							<div className="userpost" key={post.key}>
+								<span className="creator">
+									<img src={post.pfp} />
+									<p className="normal">{post.creator}</p>
+									{post.creator == "parth kabra" ? <i className='bx bxs-crown'></i> : <></>}
+								</span>
 								<br />
-								{/*<span className="likes">
-									<i className='bx bx-heart' onClick={() => likePost(post)} id="addlike"></i>
-									<p>{post.likes}</p>
-								</span>*/}
-							</span>
-						</div>
+								<span className="description">
+									<p>{post.description}</p>
+								</span>
+								
+								<span id="view">
+									<img src={post.banner} />
+								</span>
+								<span className="userposticons">
+									<br />
+									<span className="likes">
+										{
+											logged ?
+											<i className='bx bx-heart' onClick={() => likePost(post)} id="addlike"></i>
+											:
+											<i className='bx bx-heart' onClick={() => toast.error("Login to like the post.")}></i>
+										}
+										<p>{post.likes}</p>
+									</span>
+									<i className='bx bx-message' onClick={()=> handleCommentCollapse(post.key)}></i>
+									
+								</span>
+							</div>
+							<Collapse isOpened={isOpen[post.key]}>
+								{
+									logged ?
+									<span className="comments">
+										<span className="comment addcomment">
+											<input type="text" id="post__comment" className="post__input" maxLength={200} placeholder="Add a comment" />
+											<i className='bx bxs-send post__comment' onClick={()=> PostComment(post.key)} ></i>
+										</span>
+									</span>
+									:
+									<span className="comments">
+										<span className="login__comp">
+											<p className="big"><a href="/login" className="cmp__text">Login/SignUp</a> to comment </p>
+										</span>
+									</span>
+			
+								}
+								<span className="comments">
+								{comments.map((comment_data) => (
+									<span className="comment" key = {comment_data.key} style={comment_data.key != post.key ? {display:"none"} : {}}>
+										<span className="creator">
+											<img src={comment_data.pfp} />
+											<p className="normal">{comment_data.creator}</p>
+											{comment_data.creator == "parth kabra" ? <i className='bx bxs-crown'></i> : <></>}
+										</span>
+										<br />
+										<span className="description">
+											<p>{comment_data.text}</p>
+										</span>
+									</span>
+								))}
+								</span>
+							</Collapse>
+						</span>						
 					))
 					}
 				</div>

@@ -268,9 +268,10 @@ textarea{
     font-size: 20px;
 }
 
-.bx-message-alt{
+.bx-message{
     color: #545454;
     margin-left: .3em;
+    cursor: pointer;
 }
 
 #view{
@@ -383,4 +384,59 @@ textarea{
 .friendverse{
     font-size: 32px;
     font-family: "Bangers";
+}
+
+/*<===COMMENTS===>*/
+.comments{
+    padding: 1em;
+    display: flex;
+    background-color: rgb(222, 222, 222);
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.comment{
+    border: 1px solid var(--life);
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 1em;
+    padding: .7em;
+    background-color: #FFF5EE;
+}
+
+.comment:nth-child(1){
+    margin-top: 0px;
+}
+
+.post__comment{
+    font-size: var(--h2-font-size);
+    background-color: var(--life);
+    color: white;
+    border: none;
+    margin-top: .2em;
+    cursor: pointer;
+    font-family: var(--body-font);
+    padding: .5em;
+    border-radius: 5px ;
+}
+
+.addcomment{
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid rgb(189, 189, 189);
+    justify-content: space-between;
+}
+
+.post__input{
+    width: 90%;
+    font-family: var(--body-font);
+    font-size: larger;
+    padding: .5em;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid var(--life);
+    padding-bottom: 0px;
 }

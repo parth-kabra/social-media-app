@@ -9,6 +9,8 @@ export default function Header(){
 			if(user){
 				setLogged(true)
 			}
+            else{
+            }
 		})
     })
 
