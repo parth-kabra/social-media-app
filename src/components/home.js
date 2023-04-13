@@ -94,6 +94,7 @@ export default function Index(){
 			toast.warning("Comment can not be empty.")
 			return
 		}
+		document.getElementById("post__comment").value = ""
 		const comment = {
 			pfp: userpfp,
 			key: postkey,
@@ -113,14 +114,14 @@ export default function Index(){
 		function loadUser() {
 			return new Promise((resolve, reject) => {
 			  auth.onAuthStateChanged((current_user) => {
-				if (current_user) {
-				  setLogged(true)
-				  setUser(current_user.displayName)
-				  setPFP(current_user.photoURL)
-				  resolve(current_user)
-				} else {
-				  reject('User not logged in')
-				}
+					if (current_user) {
+						setLogged(true)
+						setUser(current_user.displayName)
+						setPFP(current_user.photoURL)
+						resolve(current_user)
+					} else {
+						reject('User not logged in')
+					}
 			  })
 			})
 		}
@@ -181,6 +182,7 @@ export default function Index(){
         });
 
     })
+
 	if(!loading){
 		return(
 			<>
