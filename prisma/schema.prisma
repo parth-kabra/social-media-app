@@ -17,13 +17,25 @@ model Post {
   likes Int
   creator String
   pfp String
+  email String
+  profileLink String
   key String
 }
 
 model Comment {
   id Int @id @default(autoincrement())
   text String
+  profileLink String
   key String
+  email String
   creator String
+  pfp String
+}
+
+model User{
+  id Int @id @default(autoincrement())
+  userKey Int @unique
+  creator String
+  email String @unique
   pfp String
 }

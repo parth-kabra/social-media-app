@@ -7,7 +7,25 @@ export default function Login(){
     const router = useRouter()
 
     function loginUser(){
-        signInWithPopup(auth, provider).then(()=>{
+        signInWithPopup(auth, provider).then((current)=>{
+            const email = current.user.email
+            const creator = current.user.displayName
+            const pfp = current.user.photoURL
+            const setUser = async () => {
+                const res = await fetch("/api/users", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        creator: creator,
+                        email: email,
+                        pfp: pfp
+                    }),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+            }
+            setUser()
+        }).then(()=>{
             router.push("/")
         }).catch(()=>{})
     }

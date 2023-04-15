@@ -20,6 +20,7 @@ export default function Index(){
 	const [loading, setLoading] = useState(false);
 	const [user, setUser] = useState("")
 	const [userpfp, setPFP] = useState("");
+	const [useremail, setUserEmail] = useState("")
 
 
 	async function handleNewPostPrisma(postDescription){
@@ -54,6 +55,7 @@ export default function Index(){
 			likes: 0,
 			creator: user,
 			pfp: userpfp,
+			email: useremail,
 			key: randomHash,
 		}
 		handleNewPostPrisma(post)
@@ -99,7 +101,8 @@ export default function Index(){
 			pfp: userpfp,
 			key: postkey,
 			creator: user,
-			text: text
+			text: text,
+			email: useremail
 		}
 		handlePostComment(comment)
 
@@ -118,6 +121,7 @@ export default function Index(){
 						setLogged(true)
 						setUser(current_user.displayName)
 						setPFP(current_user.photoURL)
+						setUserEmail(current_user.email)
 						resolve(current_user)
 					} else {
 						reject('User not logged in')
@@ -201,10 +205,10 @@ export default function Index(){
                 <div className="start">
                     {logged ? 
 						<span>
-							<p className="big">Start post</p>
+							<p className="big">Start a new post</p>
 							<textarea maxLength={1500} className="textarea" id="posttext" placeholder="Enter some text..."></textarea>
 
-							<p className="normal">Select an image or a video</p>
+							<p className="normal">Select a banner for post</p>
 							<input id="fileinput" type="file" accept=".jpg,.jpeg,.png,.gif" />
 							
 							<div id="preview"></div>
@@ -224,7 +228,7 @@ export default function Index(){
 							<div className="userpost" key={post.key}>
 								<span className="creator">
 									<img src={post.pfp} />
-									<p className="normal">{post.creator}</p>
+									<a href={post.profileLink} className="normal">{post.creator}</a>
 									{post.creator == "parth kabra" ? <i className='bx bxs-crown'></i> : <></>}
 								</span>
 								<br />
@@ -272,7 +276,7 @@ export default function Index(){
 									<span className="comment" key = {comment_data.key} style={comment_data.key != post.key ? {display:"none"} : {}}>
 										<span className="creator">
 											<img src={comment_data.pfp} />
-											<p className="normal">{comment_data.creator}</p>
+											<a href={post.profileLink} className="normal">{comment_data.creator}</a>
 											{comment_data.creator == "parth kabra" ? <i className='bx bxs-crown'></i> : <></>}
 										</span>
 										<br />

@@ -132,13 +132,14 @@ textarea{
 }
 
 #fileinput::before{
-    content: 'Select a video/image';
+    content: 'Select an image';
     background-color: var(--life);
     border: none;
     display: inline-block;
     font-family: var(--body-font);
     padding: .9em;
     color: white;
+    cursor: pointer;
     font-family: var(--body-font);
     border-radius: 5px ;
 }
@@ -439,4 +440,146 @@ textarea{
     border: none;
     border-bottom: 1px solid var(--life);
     padding-bottom: 0px;
+}
+
+.banner{
+    margin-top: 1em;
+    width: 100%;
+    height: 15rem;
+    border-radius: 10px;
+    background-color: #000000;
+    background-image: linear-gradient(147deg, #000000 0%, #171616 74%);
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.banner img{
+    height: 200px;
+    margin-top: 8em;
+    box-shadow: 0px 0px 34px 0px rgba(38,38,38,0.75);
+    -webkit-box-shadow: 0px 0px 34px 0px rgba(38,38,38,0.75);
+    -moz-box-shadow: 0px 0px 34px 0px rgba(38,38,38,0.75);
+    height: 200px;
+    object-position: center;
+    border-radius: 100%;
+}
+
+.username{
+    text-align: center;
+    margin-top: 1.5em;
+    font-family: "Bangers";
+    font-size: var(--h1-font-size);
+}
+
+.bx-badge-check{
+    color: rgb(0, 145, 255);
+}
+
+.bx-plus, .bx-happy-heart-eyes{
+    font-size: x-large;
+    margin-left: 5px;
+}
+
+.profile .login__btn{
+    display: inline-flex;
+}
+
+.profile .btn1{
+    background: transparent;
+    color: var(--life);
+    margin-left: 1em;
+    padding: 12px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    border:2px solid var(--life);
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.userpfp{
+    width: 50px;
+    border-radius: 50%;
+}
+
+/*<==USER==>*/
+.user img{
+    object-position: center;
+    width: 150px;
+    border-radius: 10px;
+}
+
+.community{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+}
+
+.user span p:nth-child(1){
+    font-family: "Bangers";
+    font-size: var(--h1-font-size);
+}
+
+.user span p:nth-child(2){
+    font-size: large;
+}
+
+.user{
+    padding: 1em;
+    border: 2px solid var(--life);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px; 
+    transition: .3s;
+}
+
+.user:hover{
+    transform: translate(0, -10px);
+
+}
+
+.community_{
+    display: grid;
+	--auto-grid-min-size: 23rem;
+	grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+	grid-gap: 3rem;
+    width: 100%;
+}
+
+.community__title{
+    font-size: var(--big-font-size);
+    font-family: "Bangers";
+}
+
+@media screen and (max-width:830px){
+    .buttons{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .banner{
+        height: 10rem;
+    }
+
+    .profile img{
+        width: 100px;
+        height: 100px;
+    }
+
+
+    .btn1{
+        margin-top: 1em;
+        width: 11.6em;
+        margin-left: -2.4px !important;
+        display: inline-flex;
+        justify-content: center;
+
+    }
 }
