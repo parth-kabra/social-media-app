@@ -73,7 +73,7 @@ export default function User({users}){
                     : <></>
                     }
                     <span className="buttons">
-                        <a href="/community" className="login__btn">View community <i class='bx bx-happy-heart-eyes'></i></a>
+                        <a href="/community" className="login__btn">View community <i className='bx bx-happy-heart-eyes'></i></a>
                     </span>
                 </section>
             </>
@@ -89,7 +89,7 @@ export default function User({users}){
 }
 
 export async function getServerSideProps(){
-    const res = await fetch("http://localhost:3000/api/users");
+    const res = await fetch("https://friendverse.vercel.app/api/users");
 
     const data = await res.json()
     return {
