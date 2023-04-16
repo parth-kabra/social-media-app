@@ -52,7 +52,6 @@ export default function User({users}){
                         <img src={res.pfp} />
                     </span>
                     <p className="username">{res.creator} <i className='bx bx-badge-check'></i></p>
-                    <p align="center">{res.email}</p>
                     <br />
 
                     {

@@ -31,7 +31,6 @@ export default function Community({users}){
                             <img src={user.pfp} />
                             <span>
                                 <p>{user.creator}</p>
-                                <p>{user.email}</p>
                             </span>
                         </span>
                     </a>
