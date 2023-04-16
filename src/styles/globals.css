@@ -535,9 +535,12 @@ textarea{
     padding: 1em;
     border: 2px solid var(--life);
     display: flex;
-    justify-content: space-between;
     border-radius: 10px; 
     transition: .3s;
+}
+
+.user span{
+    margin-left: 1em;
 }
 
 .user:hover{
@@ -547,7 +550,7 @@ textarea{
 
 .community_{
     display: grid;
-	--auto-grid-min-size: 23rem;
+	--auto-grid-min-size: 100%;
 	grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
 	grid-gap: 3rem;
     width: 100%;
