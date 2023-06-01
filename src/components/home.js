@@ -179,6 +179,7 @@ export default function Index(){
 			if (fileType.startsWith('image/')) {
 				const img = document.createElement('img');
 				img.src = URL.createObjectURL(file);
+				console.log(img.src)
 				img.id = "postbanner"
 				preview.innerHTML = '';
 				preview.appendChild(img);
